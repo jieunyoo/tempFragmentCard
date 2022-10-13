@@ -44,8 +44,17 @@ generator = cms.EDFilter("Pythia8HadronizerFilter",
                                     )
         )
                          )
+#ADDED LINES 48-52 
+process.LHEHiggsPtFilter = cms.EDFilter("LHEPtFilter",
+  selectedPdgIds = cms.vint32(25),
+  ptMin=cms.double(135.),
+  ptMax=cms.double(1e10),
+  src=cms.InputTag("externalLHEProducer")
 
-ProductionFilterSequence = cms.Sequence(generator)
+process.ProductionFilterSequence = cms.Sequence(process.LHEHiggsPtFilter+process.generator)
+
+#original had line 57, instead i wrote a new line (line 54)                                        
+#ProductionFilterSequence = cms.Sequence(generator)
 
 
 # Link to generator fragment:
